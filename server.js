@@ -3,16 +3,14 @@ const express = require("express");
 const dbConfig = require("./dbConfig");
 const app = express();
 const port = process.env.PORT || 5000;
-const routes = require("./routes")
+const routes = require("./routes");
 
-dbConfig()
+dbConfig();
 
 app.use(express.json());
 
-app.use(routes)
-
+app.use(routes);
 
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
 });
-  
