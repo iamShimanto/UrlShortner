@@ -28,4 +28,18 @@ const createShortUrl = async (req, res) => {
   }
 };
 
-module.exports = { createShortUrl };
+const redirectUrl = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id) return res.status(400).send({ message: "Url is required" });
+
+    const existUrl = await Shortner.findOne({ shortUrl: id });
+    if (!existUrl) return res.status(400).send({ message: "Url not exist" });
+
+    res.redirect(existUrl.longUrl);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = { createShortUrl, redirectUrl };
