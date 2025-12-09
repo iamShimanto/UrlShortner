@@ -8,4 +8,13 @@ const isPasswordStrong = (pass) => {
   );
 };
 
-module.exports = { isEmailValid, isPasswordStrong };
+const isUrlValid = (url) => {
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+module.exports = { isEmailValid, isPasswordStrong, isUrlValid };

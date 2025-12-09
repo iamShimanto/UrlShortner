@@ -4,10 +4,13 @@ const dbConfig = require("./dbConfig");
 const app = express();
 const port = process.env.PORT || 5000;
 const routes = require("./routes");
+const { isUrlValid } = require("./utils/validator");
+const { generateRandomString } = require("./utils/generate");
 
 dbConfig();
 
 app.use(express.json());
+
 
 app.use(routes);
 
