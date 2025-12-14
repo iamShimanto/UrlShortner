@@ -1,5 +1,6 @@
 const { isEmailValid, isPasswordStrong } = require("../utils/validator");
 const userSchema = require("../models/userSchema");
+const { generateToken } = require("../utils/tokens");
 
 const registerUser = async (req, res) => {
   try {
@@ -26,7 +27,6 @@ const registerUser = async (req, res) => {
     await user.save();
 
     user.password = undefined;
-    
 
     res.status(201).send({ message: "user registration successfully", user });
   } catch (error) {
@@ -55,7 +55,20 @@ const userLogin = async (req, res) => {
 
     user.password = undefined;
 
-    res.status(200).send({ message: "user login successfully", user });
+    const token = await generateToken({
+      id: user._id,
+      email: user.email,
+    });
+
+    res.cookie("access_token", token);
+
+    res.status(200).send({
+      message: "user login successfully",
+      userdata: {
+        user,
+        token,
+      },
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Internal server error" });

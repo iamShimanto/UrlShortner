@@ -5,6 +5,7 @@ const { isUrlValid } = require("../utils/validator");
 const createShortUrl = async (req, res) => {
   try {
     const { longUrl } = req.body;
+    
     if (!longUrl) return res.status(400).send({ message: "Url is required" });
     if (!isUrlValid(longUrl))
       return res.status(400).send({ message: "Enter a valid url" });
