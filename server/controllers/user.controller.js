@@ -75,7 +75,22 @@ const userLogin = async (req, res) => {
   }
 };
 
+const getProfile = async (req, res) => {
+  try {
+    const user = req.user;
+
+    const userdata = await userSchema.findById(user.id).select("-password");
+    if (!userdata)
+      return res.status(404).send({ message: "User profile not found" });
+
+    res.status(200).send(userdata);
+  } catch (error) {
+    res.status(500).send({ message: "Internal server error" });
+  }
+};
+
 module.exports = {
   registerUser,
   userLogin,
+  getProfile,
 };

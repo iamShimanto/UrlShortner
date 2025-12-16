@@ -15,10 +15,10 @@ const shortnerSchema = new mongoose.Schema({
   },
   visitHistory: [
     {
-      visitTime: {
-        type: Date,
-        default: Date.now(),
-      },
+      visitTime: Date,
+      deviceType: String,
+      os: String,
+      browser: String,
     },
   ],
 });

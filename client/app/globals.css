@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+body {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  filter: grayscale(0.4);
+  background: url(/bg-CoTNAe69.jpg) 50% / cover no-repeat;
+  justify-content: center;
+  min-height: 100vh;
+  display: flex;
+}
