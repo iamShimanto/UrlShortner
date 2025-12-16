@@ -1,3 +1,4 @@
+import Navbar from "./components/layout/Navbar";
 import "./globals.css";
 
 export const metadata = {
@@ -16,7 +17,10 @@ export default function RootLayout({ children }) {
           sizes="<generated>"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }
