@@ -33,11 +33,11 @@ const createShortUrl = async (req, res) => {
 const redirectUrl = async (req, res) => {
   try {
     const { id } = req.params;
-    if (!id) return res.status(400).send({ message: "Url is required" });
 
     const existUrl = await Shortner.findOne({ shortUrl: id });
+    console.log(existUrl);
 
-    if (!existUrl) return res.status(400).send({ message: "Url not exist" });
+    if (!existUrl) return res.redirect(process.env.CLIENT_URL + "/" + id);
 
     const info = getDeviceInfo(req);
     const history = {
@@ -49,12 +49,12 @@ const redirectUrl = async (req, res) => {
 
     if (existUrl.user) {
       existUrl.visitHistory.push(history);
-      existUrl.save();
+      await existUrl.save();
     }
 
     res.redirect(existUrl.longUrl);
   } catch (error) {
-    res.status(500).send({message: "Internal sever error"})
+    res.status(500).send({ message: "Internal sever error" });
   }
 };
 
@@ -64,7 +64,6 @@ const getAllUrl = async (req, res) => {
 
     const userdata = await Shortner.find({ user: user.id }).select("-user");
 
-   
     if (userdata.length === 0)
       return res.status(400).send({ message: "Empty Url" });
 
