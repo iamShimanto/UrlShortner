@@ -1,6 +1,5 @@
-"use client";
-
 import Button from "../ui/Button";
+import Input from "../ui/Input";
 
 export default function GenerateUrlBox() {
   return (
@@ -14,10 +13,7 @@ export default function GenerateUrlBox() {
         </p>
 
         <div className="mt-5 space-y-3">
-          <input
-            placeholder="https://example.com/long-url"
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none focus:ring-2 focus:ring-white/10"
-          />
+          <Input placeholder="https://example.com/long-url" />
           <div className="flex gap-2 pt-2">
             <Button variant="primary">Generate</Button>
 

@@ -1,24 +1,19 @@
-"use client";
-
-import Image from "next/image";
-import Link from "next/link";
-import defaultImg from "@/public/default.jpg";
-import logo from "@/public/logo.png";
+import { Link } from "react-router";
 
 export default function Navbar({ user }) {
   return (
     <header className="sticky top-0 z-50">
       <div className="backdrop-blur-md bg-white/5 border-b border-white/10">
         <div className="container flex h-20 items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-2">
-            <Image src={logo} alt="logo" width={200} />
+          <Link to="/" className="flex items-center gap-2">
+            <img src={"/logo.png"} alt="logo" width={200} />
           </Link>
 
           <nav className="flex items-center gap-2">
             {!user ? (
               <>
                 <Link
-                  href="/login"
+                  to="/login"
                   className="rounded-lg px-8 py-2.5 text-xl font-bold text-white/90 bg-white/15 hover:bg-white/10"
                 >
                   Login
@@ -26,12 +21,12 @@ export default function Navbar({ user }) {
               </>
             ) : (
               <Link
-                href="/profile"
+                to="/profile"
                 className="flex items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-white/10"
               >
                 <div className="h-8 w-8 overflow-hidden rounded-full ring-1 ring-white/15 bg-white/10">
                   <Image
-                    src={defaultImg}
+                    src={"/default.jpg"}
                     alt="Profile"
                     className="h-full w-full object-cover"
                   />

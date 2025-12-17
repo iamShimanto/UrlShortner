@@ -1,6 +1,7 @@
 import CreateUrl from "../components/dashboard/CreateUrl";
 import UrlHistory from "../components/dashboard/UrlHistory";
 
+
 function Stat({ title, value, sub }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-black/30 backdrop-blur-md p-4">
@@ -11,10 +12,7 @@ function Stat({ title, value, sub }) {
   );
 }
 
-
-
-export default function DashboardPage() {
- 
+export default function Dashboard() {
   const urls = [
     {
       shortUrl: "https://your.site/abc123",
@@ -52,7 +50,6 @@ export default function DashboardPage() {
           </div>
         </div>
 
-     
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           <Stat title="Total URLs" value="12" sub="All time" />
           <Stat title="Total Clicks" value="1,284" sub="All time" />
@@ -60,7 +57,6 @@ export default function DashboardPage() {
           <Stat title="Unique Devices" value="9" sub="From visitHistory" />
         </div>
 
-     
         <CreateUrl />
 
         <UrlHistory urls={urls} />

@@ -1,10 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
-
 @import "tailwindcss";
-
-@utility container {
-  margin-inline: auto;
-}
 
 body {
   -webkit-backdrop-filter: blur(20px);
@@ -13,4 +7,8 @@ body {
   background: url(/bg-CoTNAe69.jpg) 50% / cover no-repeat;
   min-height: 100vh;
   font-family: "Roboto", sans-serif;
+}
+.container {
+  margin: auto;
+  padding: 0 32px;
 }

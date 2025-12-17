@@ -1,5 +1,5 @@
-import React from "react";
 import Button from "../ui/Button";
+
 
 const UrlHistory = ({ urls }) => {
   return (
