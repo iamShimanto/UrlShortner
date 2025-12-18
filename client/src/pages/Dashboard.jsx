@@ -1,16 +1,7 @@
+import { useSelector } from "react-redux";
 import CreateUrl from "../components/dashboard/CreateUrl";
 import UrlHistory from "../components/dashboard/UrlHistory";
-
-
-function Stat({ title, value, sub }) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-black/30 backdrop-blur-md p-4">
-      <p className="text-xs text-white/60">{title}</p>
-      <p className="mt-2 text-2xl font-semibold text-white">{value}</p>
-      {sub ? <p className="mt-1 text-xs text-white/50">{sub}</p> : null}
-    </div>
-  );
-}
+import { Navigate } from "react-router";
 
 export default function Dashboard() {
   const urls = [
@@ -38,8 +29,15 @@ export default function Dashboard() {
     },
   ];
 
+  const userInfo = useSelector((state) => state.userData.user);
+  
+
+  if (!userInfo) {
+    return <Navigate to={"/"} />;
+  }
+
   return (
-    <main className="min-h-screen text-white">
+    <main className="min-h-screen text-white mt-4">
       <div className="container px-4 py-6 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
           <div>
@@ -48,13 +46,6 @@ export default function Dashboard() {
               Create and manage your short links
             </p>
           </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <Stat title="Total URLs" value="12" sub="All time" />
-          <Stat title="Total Clicks" value="1,284" sub="All time" />
-          <Stat title="Today Clicks" value="36" sub="Last 24 hours" />
-          <Stat title="Unique Devices" value="9" sub="From visitHistory" />
         </div>
 
         <CreateUrl />

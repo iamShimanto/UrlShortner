@@ -2,7 +2,7 @@ import api from ".";
 
 export const authSerice = {
   login: async (payload) => {
-    const res = await api.post("/auth/login", payload);
+    const res = await api.post("/api/auth/login", payload);
     return res.data;
   },
   register: async (payload) => {

@@ -21,11 +21,11 @@ export default function Navbar({ user }) {
               </>
             ) : (
               <Link
-                to="/profile"
+                to="/dashboard"
                 className="flex items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-white/10"
               >
                 <div className="h-8 w-8 overflow-hidden rounded-full ring-1 ring-white/15 bg-white/10">
-                  <Image
+                  <img
                     src={"/default.jpg"}
                     alt="Profile"
                     className="h-full w-full object-cover"

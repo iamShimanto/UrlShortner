@@ -1,6 +1,42 @@
-import { Link } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
+import Input from "../components/ui/Input";
+import { useState } from "react";
+import { authSerice } from "../api/auth.service";
+import toast from "react-hot-toast";
+import Cookies from "js-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { loggedUser } from "../store/auth/authSlice";
 
 export default function Login() {
+  const router = useNavigate();
+  const dispatch = useDispatch();
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const userInfo = useSelector((state) => state.userData.user);
+
+  if (userInfo) {
+    return <Navigate to={"/"} />;
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await authSerice.login(user);
+      toast.success(res.message);
+      Cookies.set("token", res.userdata.token);
+      dispatch(loggedUser(res.userdata.user));
+      setTimeout(() => {
+        router("/");
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
+
   return (
     <main className="min-h-175 flex items-center justify-center px-4">
       <div className="w-full max-w-md rounded-2xl border border-white/10 bg-black/30 backdrop-blur-md p-6 shadow-xl">
@@ -9,22 +45,28 @@ export default function Login() {
           Login to manage your short links
         </p>
 
-        <form className="mt-6 space-y-4">
+        <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="text-xs text-white/60">Email</label>
-            <input
+            <Input
               type="email"
               placeholder="you@example.com"
-              className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:ring-2 focus:ring-white/10"
+              required
+              onChange={(e) =>
+                setUser((prev) => ({ ...prev, email: e.target.value }))
+              }
             />
           </div>
 
           <div>
             <label className="text-xs text-white/60">Password</label>
-            <input
+            <Input
               type="password"
+              required
               placeholder="••••••••"
-              className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:ring-2 focus:ring-white/10"
+              onChange={(e) =>
+                setUser((prev) => ({ ...prev, password: e.target.value }))
+              }
             />
           </div>
 

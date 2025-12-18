@@ -35,7 +35,6 @@ const redirectUrl = async (req, res) => {
     const { id } = req.params;
 
     const existUrl = await Shortner.findOne({ shortUrl: id });
-    console.log(existUrl);
 
     if (!existUrl) return res.redirect(process.env.CLIENT_URL + "/" + id);
 
