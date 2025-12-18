@@ -2,10 +2,11 @@ import { Link, Navigate, useNavigate } from "react-router";
 import Input from "../components/ui/Input";
 import { useState } from "react";
 import { authSerice } from "../api/auth.service";
-import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { loggedUser } from "../store/auth/authSlice";
+import Button from "../components/ui/Button";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const router = useNavigate();
@@ -69,10 +70,9 @@ export default function Login() {
               }
             />
           </div>
-
-          <button className="w-full rounded-xl bg-white px-4 py-3 text-sm font-semibold text-black hover:bg-white/90">
+          <Button type="submit" className="w-full">
             Login
-          </button>
+          </Button>
         </form>
 
         <p className="mt-4 text-center text-sm text-white/60">

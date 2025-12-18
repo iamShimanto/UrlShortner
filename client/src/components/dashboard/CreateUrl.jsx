@@ -2,20 +2,24 @@ import React, { useState } from "react";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 import { urlServices } from "../../api/url.service";
-import toast from "react-hot-toast";
 import { Link } from "react-router";
+import { useDispatch } from "react-redux";
+import { url } from "../../store/url/urlSlice";
+import toast from "react-hot-toast";
+
 
 const CreateUrl = () => {
   const [longUrl, setLongUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [copied, setCopied] = useState(false);
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await urlServices.createUrl(longUrl);
-      console.log(res);
       setShortUrl(res.shortUrl);
+      dispatch(url(res.shortUrl));
       toast.success("Url Generated");
     } catch (error) {
       toast.error(error.response.data.message);
@@ -74,7 +78,7 @@ const CreateUrl = () => {
         </div>
 
         {shortUrl && (
-          <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-4 w-80">
+          <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-4 sm:w-80">
             <p className="text-base font-medium text-white/60">
               Your short URL
             </p>

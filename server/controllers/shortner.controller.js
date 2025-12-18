@@ -61,7 +61,9 @@ const getAllUrl = async (req, res) => {
   try {
     const user = req.user;
 
-    const userdata = await Shortner.find({ user: user.id }).select("-user");
+    const userdata = await Shortner.find({ user: user.id })
+      .sort({ createdAt: -1 })
+      .select("-user");
 
     if (userdata.length === 0)
       return res.status(400).send({ message: "Empty Url" });
