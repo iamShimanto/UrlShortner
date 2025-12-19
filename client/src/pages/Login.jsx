@@ -26,6 +26,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const res = await authSerice.login(user);
+      console.log(res)
       toast.success(res.message);
       Cookies.set("token", res.userdata.token);
       dispatch(loggedUser(res.userdata.user));
