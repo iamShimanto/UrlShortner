@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import Button from "../ui/Button";
 import { urlServices } from "../../api/url.service";
-import { Link } from "react-router";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import VisitHistoryCard from "./VisitHistoryCard";
@@ -17,7 +15,7 @@ const UrlHistory = () => {
       setUrldata(res);
     })();
   }, [urlInfo, val]);
-  console.log(urldata);
+  // console.log(urldata);
 
   const onCopy = async (shortUrl) => {
     try {
@@ -52,7 +50,7 @@ const UrlHistory = () => {
 
       <div className="mt-2 divide-y divide-white/10">
         {urldata.map((u) => (
-          <VisitHistoryCard u={u} onCopy={onCopy} setVal={setVal} />
+          <VisitHistoryCard key={u._id}  u={u} onCopy={onCopy} setVal={setVal} />
         ))}
       </div>
     </section>

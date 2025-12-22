@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router";
 import Button from "../ui/Button";
+import HistoryPopUp from "../ui/HistoryPopUp";
 
 const VisitHistoryCard = ({ u, setVal, onCopy }) => {
+  const [open, setOpen] = useState(false);
+
   return (
     <div key={u._id} className="py-4 grid grid-cols-1 md:grid-cols-12 gap-3">
       <div className="md:col-span-3">
@@ -46,7 +49,7 @@ const VisitHistoryCard = ({ u, setVal, onCopy }) => {
         <p className="text-xs text-white/50">{u.device}</p>
       </div>
 
-      <div className="md:col-span-1 flex md:justify-end gap-2">
+      <div className="md:col-span-1 flex md:justify-end gap-2 relative">
         <Button
           onClick={() => onCopy(u.shortUrl)}
           variant="secondary"
@@ -54,9 +57,10 @@ const VisitHistoryCard = ({ u, setVal, onCopy }) => {
         >
           Copy
         </Button>
-        <Button variant="outline" size="sm">
+        <Button onClick={() => setOpen(true)} variant="outline" size="sm">
           View
         </Button>
+        {open && <HistoryPopUp u={u.visitHistory} onClose={setOpen} />}
       </div>
     </div>
   );

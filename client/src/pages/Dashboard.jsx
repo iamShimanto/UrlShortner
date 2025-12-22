@@ -4,31 +4,6 @@ import UrlHistory from "../components/dashboard/UrlHistory";
 import { Navigate } from "react-router";
 
 export default function Dashboard() {
-  const urls = [
-    {
-      shortUrl: "https://your.site/abc123",
-      longUrl:
-        "https://example.com/some/very/long/url/with/params?utm_source=demo",
-      clicks: 42,
-      device: "Android • Chrome",
-      last: "Dec 16, 2025",
-    },
-    {
-      shortUrl: "https://your.site/x9kP0",
-      longUrl: "https://github.com/your-repo/readme",
-      clicks: 7,
-      device: "Windows • Firefox",
-      last: "Dec 15, 2025",
-    },
-    {
-      shortUrl: "https://your.site/hello",
-      longUrl: "https://nextjs.org/docs/app",
-      clicks: 0,
-      device: "-",
-      last: "-",
-    },
-  ];
-
   const userInfo = useSelector((state) => state.userData.user);
   
 
@@ -50,7 +25,7 @@ export default function Dashboard() {
 
         <CreateUrl />
 
-        <UrlHistory urls={urls} />
+        <UrlHistory />
       </div>
     </main>
   );
