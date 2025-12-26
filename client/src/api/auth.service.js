@@ -9,6 +9,10 @@ export const authSerice = {
     const res = await api.post("/api/auth/register", payload);
     return res.data;
   },
+  logOut: async () => {
+    const res = await api.get("/api/auth/logout");
+    return res.data;
+  },
   profile: async () => {
     const res = await api.get("/api/auth/profile");
     return res.data;

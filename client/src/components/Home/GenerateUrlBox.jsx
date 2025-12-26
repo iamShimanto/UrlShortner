@@ -4,20 +4,29 @@ import Input from "../ui/Input";
 import { urlServices } from "../../api/url.service";
 import { Link } from "react-router";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
 
 export default function GenerateUrlBox() {
-  const [longUrl, setLongUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(false)
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    setLoading(true)
     try {
-      const res = await urlServices.createUrl(longUrl);
+      const res = await urlServices.createUrl(data);
       setShortUrl(res.shortUrl);
       toast.success("Url Generated");
     } catch (error) {
       toast.error(error.response.data.message);
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -35,7 +44,7 @@ export default function GenerateUrlBox() {
   };
 
   const handleClear = () => {
-    setLongUrl("");
+    reset({ longUrl: "" });
     setShortUrl("");
   };
 
@@ -50,14 +59,14 @@ export default function GenerateUrlBox() {
         </p>
 
         <div className="mt-5 space-y-3">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Input
               placeholder="https://example.com/long-url"
-              onChange={(e) => setLongUrl(e.target.value)}
-              value={longUrl}
+              {...register("longUrl", { required: "Url is required" })}
+              error={errors.longUrl?.message}
             />
             <div className="flex gap-2 pt-2 mt-3">
-              <Button type="submit" variant="primary">
+              <Button type="submit" variant="primary" disabled={loading} >
                 Generate
               </Button>
 

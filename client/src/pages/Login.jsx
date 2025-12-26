@@ -1,34 +1,28 @@
 import { Link, Navigate, useNavigate } from "react-router";
 import Input from "../components/ui/Input";
-import { useState } from "react";
 import { authSerice } from "../api/auth.service";
-import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { loggedUser } from "../store/auth/authSlice";
+import { loggedUser } from "../store/slices/authSlice";
 import Button from "../components/ui/Button";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 export default function Login() {
   const router = useNavigate();
   const dispatch = useDispatch();
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const [loading, setLoading] = useState(false);
 
-  const userInfo = useSelector((state) => state.userData.user);
-
-  if (userInfo) {
-    return <Navigate to={"/"} />;
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    setLoading(true);
     try {
-      const res = await authSerice.login(user);
-      console.log(res)
+      const res = await authSerice.login(data);
       toast.success(res.message);
-      Cookies.set("token", res.userdata.token);
       dispatch(loggedUser(res.userdata.user));
       setTimeout(() => {
         router("/");
@@ -36,8 +30,16 @@ export default function Login() {
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
   };
+
+  const userInfo = useSelector((state) => state.userData.user);
+
+  if (userInfo) {
+    return <Navigate to={"/"} />;
+  }
 
   return (
     <main className="min-h-175 flex items-center justify-center px-4">
@@ -47,16 +49,14 @@ export default function Login() {
           Login to manage your short links
         </p>
 
-        <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+        <form className="mt-6 space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label className="text-xs text-white/60">Email</label>
             <Input
               type="email"
               placeholder="you@example.com"
-              required
-              onChange={(e) =>
-                setUser((prev) => ({ ...prev, email: e.target.value }))
-              }
+              {...register("email", { required: "Email Address is required" })}
+              error={errors?.email?.message}
             />
           </div>
 
@@ -64,14 +64,12 @@ export default function Login() {
             <label className="text-xs text-white/60">Password</label>
             <Input
               type="password"
-              required
               placeholder="••••••••"
-              onChange={(e) =>
-                setUser((prev) => ({ ...prev, password: e.target.value }))
-              }
+              {...register("password", { required: "Password is required" })}
+              error={errors?.password?.message}
             />
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" disabled={loading}>
             Login
           </Button>
         </form>

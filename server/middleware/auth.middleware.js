@@ -2,7 +2,7 @@ const { verifyToken } = require("../utils/tokens");
 
 const isAuthenticate = (req, res, next) => {
   try {
-    const token = req.headers.access_token;
+    const token = req.cookies?.access_token;
 
     const decoded = verifyToken(token);
     if (!decoded)
@@ -17,7 +17,7 @@ const isAuthenticate = (req, res, next) => {
 
 const authMiddleware = (req, res, next) => {
   try {
-    const token = req.headers.access_token;
+    const token = req.cookies?.access_token;
 
     const decoded = verifyToken(token);
     if (!decoded)

@@ -8,6 +8,7 @@ const variants = {
   secondary: "bg-white/10 text-white hover:bg-white/15",
   outline: "border border-white/10 bg-transparent text-white hover:bg-white/10",
   ghost: "text-white hover:bg-white/10",
+  danger: "bg-red-600 text-white hover:bg-red-500 focus:ring-red-500/30",
 };
 
 const sizes = {

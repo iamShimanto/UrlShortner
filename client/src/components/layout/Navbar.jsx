@@ -33,7 +33,7 @@ export default function Navbar({ user }) {
                 </div>
 
                 <span className="hidden sm:block text-sm text-white/90">
-                  {user?.name || "Profile"}
+                  {user?.fullName.split(" ")[0] || "Profile"}
                 </span>
               </Link>
             )}

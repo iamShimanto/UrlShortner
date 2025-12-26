@@ -15,7 +15,6 @@ const UrlHistory = () => {
       setUrldata(res);
     })();
   }, [urlInfo, val]);
-  // console.log(urldata);
 
   const onCopy = async (shortUrl) => {
     try {

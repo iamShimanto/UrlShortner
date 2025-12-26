@@ -1,5 +1,6 @@
 import { Link, Navigate, useNavigate } from "react-router";
 import Input from "../components/ui/Input";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { authSerice } from "../api/auth.service";
 import { useSelector } from "react-redux";
@@ -8,22 +9,19 @@ import toast from "react-hot-toast";
 
 export default function Registration() {
   const router = useNavigate();
-  const [user, setUser] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const [loading, setLoading] = useState(false);
   const userInfo = useSelector((state) => state.userData.user);
 
-  if (userInfo) {
-    return <Navigate to={"/"} />;
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    setLoading(true);
     try {
-      const res = await authSerice.register(user);
-      console.log(res);
+      const res = await authSerice.register(data);
+
       toast.success(res.message);
       setTimeout(() => {
         router("/login");
@@ -31,8 +29,14 @@ export default function Registration() {
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (userInfo) {
+    return <Navigate to={"/"} />;
+  }
 
   return (
     <main className="min-h-175 flex items-center justify-center px-4">
@@ -42,16 +46,16 @@ export default function Registration() {
           Start shortening URLs in seconds
         </p>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
           <div>
             <label className="text-xs text-white/60">Name</label>
             <Input
               type="text"
               placeholder="Your name"
-              required
-              onChange={(e) =>
-                setUser((prev) => ({ ...prev, fullName: e.target.value }))
-              }
+              {...register("fullName", {
+                required: "Full Name is required",
+              })}
+              error={errors?.fullName?.message}
             />
           </div>
           <div>
@@ -59,10 +63,10 @@ export default function Registration() {
             <Input
               type="email"
               placeholder="you@example.com"
-              required
-              onChange={(e) =>
-                setUser((prev) => ({ ...prev, email: e.target.value }))
-              }
+              {...register("email", {
+                required: "Email Address is required",
+              })}
+              error={errors?.email?.message}
             />
           </div>
           <div>
@@ -70,13 +74,13 @@ export default function Registration() {
             <Input
               type="password"
               placeholder="••••••••"
-              required
-              onChange={(e) =>
-                setUser((prev) => ({ ...prev, password: e.target.value }))
-              }
+              {...register("password", {
+                required: "Password is required",
+              })}
+              error={errors?.password?.message}
             />
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" disabled={loading}>
             Sign up
           </Button>
         </form>

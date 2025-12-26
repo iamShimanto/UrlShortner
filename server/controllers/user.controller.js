@@ -89,8 +89,18 @@ const getProfile = async (req, res) => {
   }
 };
 
+const logOut = async (req, res) => {
+  try {
+    res.clearCookie("token");
+    res.status(200).send({ message: "Logged Out" });
+  } catch (error) {
+    res.status(500).send({ message: "Internal server error" });
+  }
+};
+
 module.exports = {
   registerUser,
   userLogin,
   getProfile,
+  logOut,
 };

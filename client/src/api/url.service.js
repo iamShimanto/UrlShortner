@@ -2,7 +2,7 @@ import api from ".";
 
 export const urlServices = {
   createUrl: async (longUrl) => {
-    const res = await api.post("/api/url/create", { longUrl });
+    const res = await api.post("/api/url/create", longUrl);
     return res.data;
   },
   getAllUrl: async () => {

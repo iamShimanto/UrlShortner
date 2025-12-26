@@ -49,7 +49,7 @@ const VisitHistoryCard = ({ u, setVal, onCopy }) => {
         <p className="text-xs text-white/50">{u.device}</p>
       </div>
 
-      <div className="md:col-span-1 flex md:justify-end gap-2 relative">
+      <div className="md:col-span-1 flex md:justify-end gap-2">
         <Button
           onClick={() => onCopy(u.shortUrl)}
           variant="secondary"
@@ -60,7 +60,11 @@ const VisitHistoryCard = ({ u, setVal, onCopy }) => {
         <Button onClick={() => setOpen(true)} variant="outline" size="sm">
           View
         </Button>
-        {open && <HistoryPopUp u={u.visitHistory} onClose={setOpen} />}
+        {open && (
+          <div className="">
+            <HistoryPopUp u={u.visitHistory} onClose={setOpen} />
+          </div>
+        )}
       </div>
     </div>
   );
