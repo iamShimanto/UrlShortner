@@ -13,7 +13,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL, "http://localhost:5173"],
+    origin: [
+      process.env.CLIENT_URL,
+      "http://localhost:5173",
+      "https://url-shortner-ruhul.vercel.app",
+      "https://url-shortner-maskur.vercel.app",
+    ],
     credentials: true,
   })
 );
