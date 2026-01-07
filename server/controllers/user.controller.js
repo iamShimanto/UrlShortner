@@ -60,7 +60,13 @@ const userLogin = async (req, res) => {
       email: user.email,
     });
 
-    res.cookie("access_token", token);
+    res.cookie("access_token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      path: "/",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     res.status(200).send({
       message: "user login successfully",
